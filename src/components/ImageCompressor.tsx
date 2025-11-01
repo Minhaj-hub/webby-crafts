@@ -82,7 +82,7 @@ export const ImageCompressor = () => {
               Image Compressor
             </h2>
             <p className="text-muted-foreground text-lg">
-              Reduce image file size while maintaining quality
+              Reduce file size for JPEG, PNG, WebP, BMP, GIF, and AVIF images
             </p>
           </div>
 
@@ -90,7 +90,7 @@ export const ImageCompressor = () => {
             <div className="space-y-6">
               <FileUploadZone
                 onFileSelect={handleFileSelect}
-                acceptedFormats={[".jpg", ".jpeg", ".png", ".webp"]}
+                acceptedFormats={[".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif", ".avif"]}
                 icon={<FileImage className="w-8 h-8 text-primary" />}
                 title="Drop your image to compress"
                 description="or click to browse"
