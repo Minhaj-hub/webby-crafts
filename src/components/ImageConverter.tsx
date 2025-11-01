@@ -7,7 +7,7 @@ import { FileUploadZone } from "./FileUploadZone";
 import { ProcessingIndicator } from "./ProcessingIndicator";
 import { toast } from "sonner";
 
-type ImageFormat = "jpeg" | "png" | "webp";
+type ImageFormat = "jpeg" | "png" | "webp" | "bmp" | "gif" | "avif";
 
 export const ImageConverter = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -79,7 +79,7 @@ export const ImageConverter = () => {
               Image Format Converter
             </h2>
             <p className="text-muted-foreground text-lg">
-              Convert between JPG, PNG, and WebP formats instantly
+              Convert between JPEG, PNG, WebP, BMP, GIF, and AVIF formats
             </p>
           </div>
 
@@ -100,13 +100,16 @@ export const ImageConverter = () => {
                     <SelectItem value="jpeg">JPEG</SelectItem>
                     <SelectItem value="png">PNG</SelectItem>
                     <SelectItem value="webp">WebP</SelectItem>
+                    <SelectItem value="bmp">BMP</SelectItem>
+                    <SelectItem value="gif">GIF</SelectItem>
+                    <SelectItem value="avif">AVIF</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <FileUploadZone
                 onFileSelect={handleFileSelect}
-                acceptedFormats={[".jpg", ".jpeg", ".png", ".webp"]}
+                acceptedFormats={[".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif", ".avif"]}
                 icon={<RefreshCw className="w-8 h-8 text-accent" />}
                 title="Drop your image to convert"
                 description="or click to browse"
