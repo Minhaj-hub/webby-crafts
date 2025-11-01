@@ -85,6 +85,25 @@ export const ImageConverter = () => {
 
           <Card className="p-8 shadow-lg">
             <div className="space-y-6">
+              <div>
+                <label className="text-sm font-medium text-foreground mb-2 block">
+                  Convert to:
+                </label>
+                <Select
+                  value={targetFormat}
+                  onValueChange={(value) => setTargetFormat(value as ImageFormat)}
+                >
+                  <SelectTrigger className="w-full bg-background">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background z-50">
+                    <SelectItem value="jpeg">JPEG</SelectItem>
+                    <SelectItem value="png">PNG</SelectItem>
+                    <SelectItem value="webp">WebP</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
               <FileUploadZone
                 onFileSelect={handleFileSelect}
                 acceptedFormats={[".jpg", ".jpeg", ".png", ".webp"]}
@@ -94,34 +113,13 @@ export const ImageConverter = () => {
               />
 
               {file && status === "idle" && (
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-sm font-medium text-foreground mb-2 block">
-                      Convert to:
-                    </label>
-                    <Select
-                      value={targetFormat}
-                      onValueChange={(value) => setTargetFormat(value as ImageFormat)}
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="jpeg">JPEG</SelectItem>
-                        <SelectItem value="png">PNG</SelectItem>
-                        <SelectItem value="webp">WebP</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <Button
-                    onClick={convertImage}
-                    className="w-full bg-accent hover:bg-accent/90"
-                    size="lg"
-                  >
-                    Convert Image
-                  </Button>
-                </div>
+                <Button
+                  onClick={convertImage}
+                  className="w-full bg-accent hover:bg-accent/90"
+                  size="lg"
+                >
+                  Convert to {targetFormat.toUpperCase()}
+                </Button>
               )}
 
               <ProcessingIndicator status={status} />
