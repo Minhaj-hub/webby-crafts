@@ -92,7 +92,7 @@ export const ImageCompressor = () => {
                 onFileSelect={handleFileSelect}
                 acceptedFormats={[".jpg", ".jpeg", ".png", ".webp"]}
                 icon={<FileImage className="w-8 h-8 text-primary" />}
-                title="Drop your image here"
+                title="Drop your image to compress"
                 description="or click to browse"
               />
 

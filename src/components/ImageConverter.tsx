@@ -89,7 +89,7 @@ export const ImageConverter = () => {
                 onFileSelect={handleFileSelect}
                 acceptedFormats={[".jpg", ".jpeg", ".png", ".webp"]}
                 icon={<RefreshCw className="w-8 h-8 text-accent" />}
-                title="Drop your image here"
+                title="Drop your image to convert"
                 description="or click to browse"
               />
 
