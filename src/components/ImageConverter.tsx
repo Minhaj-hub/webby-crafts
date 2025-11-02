@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { FileUploadZone } from "./FileUploadZone";
 import { ProcessingIndicator } from "./ProcessingIndicator";
 import { toast } from "sonner";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 type ImageFormat = "jpeg" | "png" | "webp" | "bmp" | "gif" | "avif";
 
@@ -14,6 +15,7 @@ export const ImageConverter = () => {
   const [targetFormat, setTargetFormat] = useState<ImageFormat>("png");
   const [status, setStatus] = useState<"idle" | "processing" | "success" | "error">("idle");
   const [convertedImage, setConvertedImage] = useState<string | null>(null);
+  const { logToolUsage, logFileConversion } = useAnalytics();
 
   const handleFileSelect = (selectedFile: File) => {
     setFile(selectedFile);
@@ -27,6 +29,9 @@ export const ImageConverter = () => {
     setStatus("processing");
 
     try {
+      // Track tool usage
+      logToolUsage("image_converter");
+      
       const img = await createImageBitmap(file);
       const canvas = document.createElement("canvas");
       canvas.width = img.width;
@@ -46,6 +51,9 @@ export const ImageConverter = () => {
             setConvertedImage(url);
             setStatus("success");
             toast.success(`Image converted to ${targetFormat.toUpperCase()} successfully!`);
+            
+            // Track successful conversion
+            logFileConversion(`image_to_${targetFormat}`, file.size);
           }
         },
         mimeType,

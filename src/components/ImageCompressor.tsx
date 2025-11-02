@@ -1,107 +1,197 @@
 import { useState } from "react";
-import { FileImage, Download } from "lucide-react";
+import { FileImage, Download, Zap, TrendingDown, Eye, EyeOff, X } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import { FileUploadZone } from "./FileUploadZone";
 import { ProcessingIndicator } from "./ProcessingIndicator";
 import { toast } from "sonner";
+import { useAnalytics } from "@/hooks/useAnalytics";
+import { useNavigate } from "react-router-dom";
 
 export const ImageCompressor = () => {
-  const [file, setFile] = useState<File | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
+  const [filePreviews, setFilePreviews] = useState<{file: File, preview: string}[]>([]);
   const [quality, setQuality] = useState([80]);
-  const [status, setStatus] = useState<"idle" | "processing" | "success" | "error">("idle");
-  const [compressedImage, setCompressedImage] = useState<string | null>(null);
-  const [originalSize, setOriginalSize] = useState<number>(0);
-  const [compressedSize, setCompressedSize] = useState<number>(0);
 
-  const handleFileSelect = (selectedFile: File) => {
-    setFile(selectedFile);
-    setOriginalSize(selectedFile.size);
-    setStatus("idle");
-    setCompressedImage(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const { logToolUsage } = useAnalytics();
+  const navigate = useNavigate();
+
+  const handleFileSelect = (selectedFiles: File | File[]) => {
+    const fileArray = Array.isArray(selectedFiles) ? selectedFiles : [selectedFiles];
+    
+    // Add new files to existing ones instead of replacing
+    const newFiles = [...files, ...fileArray];
+    setFiles(newFiles);
+    
+    // Create previews for new files only
+    const newPreviews: {file: File, preview: string}[] = [];
+    fileArray.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        newPreviews.push({file, preview: e.target?.result as string});
+        if (newPreviews.length === fileArray.length) {
+          setFilePreviews(prev => [...prev, ...newPreviews]);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
   };
 
-  const compressImage = async () => {
-    if (!file) return;
+  const startCompression = () => {
+    if (files.length === 0) return;
+    
+    logToolUsage("image_compressor");
+    
+    navigate("/compression-results", {
+      state: {
+        files,
+        quality: quality[0],
 
-    setStatus("processing");
-
-    try {
-      const img = await createImageBitmap(file);
-      const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
-
-      const ctx = canvas.getContext("2d");
-      if (!ctx) throw new Error("Could not get canvas context");
-
-      ctx.drawImage(img, 0, 0);
-
-      canvas.toBlob(
-        (blob) => {
-          if (blob) {
-            const url = URL.createObjectURL(blob);
-            setCompressedImage(url);
-            setCompressedSize(blob.size);
-            setStatus("success");
-            toast.success("Image compressed successfully!");
-          }
-        },
-        "image/jpeg",
-        quality[0] / 100
-      );
-    } catch (error) {
-      setStatus("error");
-      toast.error("Failed to compress image");
-    }
+      }
+    });
   };
 
-  const downloadImage = () => {
-    if (!compressedImage) return;
-
+  const downloadImage = (compressed: string, fileName: string) => {
     const link = document.createElement("a");
-    link.href = compressedImage;
-    link.download = `compressed-${file?.name}`;
+    link.href = compressed;
+    link.download = `compressed-${fileName}`;
     link.click();
   };
 
-  const reductionPercentage = originalSize && compressedSize
-    ? ((originalSize - compressedSize) / originalSize * 100).toFixed(1)
-    : 0;
+  const formatFileSize = (bytes: number) => {
+    if (bytes >= 1024 * 1024) {
+      return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+    } else {
+      return `${(bytes / 1024).toFixed(2)} KB`;
+    }
+  };
+
+  const getQualityLabel = (quality: number) => {
+    if (quality >= 90) return { label: "Highest", color: "bg-green-500" };
+    if (quality >= 70) return { label: "High", color: "bg-blue-500" };
+    if (quality >= 50) return { label: "Medium", color: "bg-yellow-500" };
+    return { label: "Low", color: "bg-red-500" };
+  };
+
+  const estimatedReduction = Math.max(0, 100 - quality[0]);
 
   return (
-    <section id="compress" className="py-20 bg-gradient-section">
+    <section id="compress" className="py-8 bg-gradient-section" aria-labelledby="compress-heading">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-block p-3 bg-primary/10 rounded-2xl mb-4">
-              <FileImage className="w-8 h-8 text-primary" />
-            </div>
-            <h2 className="text-4xl font-bold text-foreground mb-4">
+          <div className="text-center mb-6">
+            <h1 className="text-3xl font-bold text-foreground mb-2">
               Image Compressor
-            </h2>
-            <p className="text-muted-foreground text-lg">
-              Reduce file size for JPEG, PNG, WebP, BMP, GIF, and AVIF images
+            </h1>
+            <p className="text-muted-foreground">
+              Reduce file sizes by up to 90% without losing quality
             </p>
           </div>
 
-          <Card className="p-8 shadow-lg">
+          <Card className="p-6 shadow-lg border-0 bg-card/50">
             <div className="space-y-6">
               <FileUploadZone
                 onFileSelect={handleFileSelect}
                 acceptedFormats={[".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif", ".avif"]}
                 icon={<FileImage className="w-8 h-8 text-primary" />}
-                title="Drop your image to compress"
-                description="or click to browse"
+                title="Drop images to compress"
+                description="Select single or multiple images"
+                multiple
               />
 
-              {file && status === "idle" && (
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-sm font-medium text-foreground mb-2 block">
-                      Quality: {quality[0]}%
-                    </label>
+              {files.length > 0 && (
+                <div className="space-y-6">
+                  {/* Selected Images */}
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm font-medium">{files.length} image(s) selected</p>
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => {
+                          setFiles([]);
+                          setFilePreviews([]);
+                        }}
+                      >
+                        Clear All
+                      </Button>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-64 overflow-y-auto">
+                      {filePreviews.map((item, index) => (
+                        <div key={index} className="flex items-center gap-3 p-3 bg-secondary/20 rounded-lg">
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <img 
+                                src={item.preview} 
+                                alt={item.file.name}
+                                className="w-16 h-16 object-cover rounded border flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+                              />
+                            </DialogTrigger>
+                            <DialogContent className="max-w-4xl">
+                              <div className="flex flex-col items-center space-y-4">
+                                <img 
+                                  src={item.preview} 
+                                  alt={item.file.name}
+                                  className="max-w-full max-h-[70vh] object-contain"
+                                />
+                                <div className="text-center">
+                                  <p className="font-medium">{item.file.name}</p>
+                                  <p className="text-sm text-muted-foreground">{formatFileSize(item.file.size)}</p>
+                                </div>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-sm truncate">{item.file.name}</p>
+                            <p className="text-xs text-muted-foreground">{formatFileSize(item.file.size)}</p>
+                          </div>
+                          <div className="flex gap-1">
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              className="flex-shrink-0"
+                              onClick={() => setPreviewImage(item.preview)}
+                            >
+                              <Eye className="w-4 h-4" />
+                            </Button>
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              className="flex-shrink-0"
+                              onClick={() => {
+                                const newFiles = files.filter((_, i) => i !== index);
+                                const newPreviews = filePreviews.filter((_, i) => i !== index);
+                                setFiles(newFiles);
+                                setFilePreviews(newPreviews);
+                              }}
+                            >
+                              <X className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Quality Control */}
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <label className="text-sm font-medium text-foreground">
+                        Compression Quality
+                      </label>
+                      <div className="flex items-center gap-2">
+                        <Badge className={getQualityLabel(quality[0]).color}>
+                          {getQualityLabel(quality[0]).label}
+                        </Badge>
+                        <span className="text-sm font-mono">{quality[0]}%</span>
+                      </div>
+                    </div>
+                    
                     <Slider
                       value={quality}
                       onValueChange={setQuality}
@@ -110,55 +200,54 @@ export const ImageCompressor = () => {
                       step={5}
                       className="w-full"
                     />
-                  </div>
-
-                  <Button
-                    onClick={compressImage}
-                    className="w-full"
-                    size="lg"
-                  >
-                    Compress Image
-                  </Button>
-                </div>
-              )}
-
-              <ProcessingIndicator status={status} />
-
-              {status === "success" && compressedImage && (
-                <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4 p-4 bg-secondary rounded-lg">
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Original</p>
-                      <p className="text-lg font-semibold">
-                        {(originalSize / 1024 / 1024).toFixed(2)} MB
-                      </p>
+                    
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>Smaller file</span>
+                      <span>Better quality</span>
                     </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Compressed</p>
-                      <p className="text-lg font-semibold text-success">
-                        {(compressedSize / 1024 / 1024).toFixed(2)} MB
+                    
+                    {/* Estimated reduction */}
+                    <div className="p-3 bg-primary/5 rounded-lg border border-primary/10">
+                      <div className="flex items-center gap-2 mb-2">
+                        <TrendingDown className="w-4 h-4 text-primary" />
+                        <span className="text-sm font-medium">Estimated Reduction</span>
+                      </div>
+                      <Progress value={estimatedReduction} className="h-2" />
+                      <p className="text-xs text-muted-foreground mt-1">
+                        ~{estimatedReduction}% size reduction
                       </p>
                     </div>
                   </div>
 
-                  <div className="p-4 bg-success/10 border border-success/20 rounded-lg text-center">
-                    <p className="text-success font-semibold text-lg">
-                      Reduced by {reductionPercentage}%
-                    </p>
-                  </div>
+
 
                   <Button
-                    onClick={downloadImage}
-                    className="w-full"
+                    onClick={startCompression}
+                    className="w-full hover:scale-[1.02] transition-all duration-200 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
                     size="lg"
                   >
-                    <Download className="w-4 h-4 mr-2" />
-                    Download Compressed Image
+                    <Zap className="w-4 h-4 mr-2" />
+                    Compress {files.length} Image{files.length > 1 ? 's' : ''}
                   </Button>
                 </div>
               )}
+
+
             </div>
           </Card>
+          
+          {/* Preview Dialog */}
+          {previewImage && (
+            <Dialog open={!!previewImage} onOpenChange={() => setPreviewImage(null)}>
+              <DialogContent className="max-w-4xl">
+                <img 
+                  src={previewImage} 
+                  alt="Preview"
+                  className="max-w-full max-h-[80vh] object-contain mx-auto"
+                />
+              </DialogContent>
+            </Dialog>
+          )}
         </div>
       </div>
     </section>

@@ -1,37 +1,37 @@
-import { Wrench, Mail, Github, Twitter } from "lucide-react";
+import { Wrench, Mail } from "lucide-react";
 
 export const Footer = () => {
   return (
-    <footer className="bg-card border-t border-border">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
-                <Wrench className="w-5 h-5 text-white" />
+    <footer className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-950 dark:to-gray-900 border-t border-gray-200/60 dark:border-gray-700/60">
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          <div className="space-y-6">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 bg-gradient-hero rounded-2xl flex items-center justify-center shadow-lg">
+                <Wrench className="w-7 h-7 text-white" />
               </div>
-              <span className="font-bold text-lg text-foreground">SmartTools</span>
+              <span className="font-bold text-2xl bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">Convert Kitty</span>
             </div>
-            <p className="text-sm text-muted-foreground">
-              Professional utility tools for your daily workflow. Fast, secure, and free.
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+              Professional utility tools for your daily workflow. Fast, secure, and completely free.
             </p>
           </div>
 
           <div>
-            <h3 className="font-semibold text-foreground mb-4">Tools</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <h3 className="font-bold text-gray-900 dark:text-white mb-6 text-lg">Tools</h3>
+            <ul className="space-y-3">
               <li>
-                <a href="#compress" className="hover:text-primary transition-colors">
+                <a href="#compress" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium">
                   Image Compressor
                 </a>
               </li>
               <li>
-                <a href="#convert" className="hover:text-primary transition-colors">
+                <a href="#convert" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium">
                   Format Converter
                 </a>
               </li>
               <li>
-                <a href="#pdf-to-image" className="hover:text-primary transition-colors">
+                <a href="#pdf-to-image" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium">
                   PDF to Image
                 </a>
               </li>
@@ -39,53 +39,64 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h3 className="font-semibold text-foreground mb-4">Legal</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <h3 className="font-bold text-gray-900 dark:text-white mb-6 text-lg">Legal</h3>
+            <ul className="space-y-3">
               <li>
-                <a href="#" className="hover:text-primary transition-colors">
+                <a href="https://sites.google.com/view/convertkitty/home" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium">
                   Privacy Policy
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-primary transition-colors">
+                <a href="/terms" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium">
                   Terms of Service
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-primary transition-colors">
-                  Cookie Policy
+                <a href="/disclaimer" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium">
+                  Disclaimer
                 </a>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold text-foreground mb-4">Connect</h3>
-            <div className="flex space-x-4">
-              <a
-                href="#"
-                className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center hover:bg-primary hover:text-white transition-colors"
-              >
-                <Mail className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center hover:bg-primary hover:text-white transition-colors"
-              >
-                <Github className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center hover:bg-primary hover:text-white transition-colors"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
-            </div>
+            <h3 className="font-bold text-gray-900 dark:text-white mb-6 text-lg">Resources</h3>
+            <ul className="space-y-3">
+              <li>
+                <a href="/blog" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium">
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a href="/tutorials" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium">
+                  Tutorials
+                </a>
+              </li>
+              <li>
+                <a href="/about" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="/contact" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium">
+                  Contact
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="border-t border-border mt-8 pt-8 text-center text-sm text-muted-foreground">
-          <p>© 2025 SmartTools. All rights reserved. Built with ❤️ for creators.</p>
+        <div className="border-t border-gray-200/60 dark:border-gray-700/60 mt-12 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-gray-600 dark:text-gray-400 font-medium">
+              © 2025 Convert Kitty. All rights reserved.
+            </p>
+            <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-500">
+              <span>Made with</span>
+              <span className="text-red-500">♥</span>
+              <span>for privacy & security</span>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

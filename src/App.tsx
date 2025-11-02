@@ -5,8 +5,45 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import TermsOfService from "./pages/TermsOfService";
+import AboutUs from "./pages/AboutUs";
+import Contact from "./pages/Contact";
+import Disclaimer from "./pages/Disclaimer";
+import Blog from "./pages/Blog";
+import Tutorials from "./pages/Tutorials";
+import CompressImagePage from "./pages/CompressImagePage";
+import ConvertImagePage from "./pages/ConvertImagePage";
+import PdfToImagePage from "./pages/PdfToImagePage";
+import ImageToPdfPage from "./pages/ImageToPdfPage";
+import CompressionResultsPage from "./pages/CompressionResultsPage";
+// Initialize Firebase Analytics
+// import { analytics } from "@/lib/firebase";
+import { getAnalytics } from "firebase/analytics";
+
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const queryClient = new QueryClient();
+
+// Component to track page views
+const AnalyticsTracker = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (getAnalytics) {
+      // Log page view with Firebase Analytics
+      // @ts-ignore
+      if (typeof window !== "undefined" && window.gtag) {
+        // @ts-ignore
+        window.gtag("config", import.meta.env.VITE_FIREBASE_MEASUREMENT_ID, {
+          page_path: location.pathname + location.search,
+        });
+      }
+    }
+  }, [location]);
+
+  return null;
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -14,8 +51,20 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <AnalyticsTracker />
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/compress-image" element={<CompressImagePage />} />
+          <Route path="/compression-results" element={<CompressionResultsPage />} />
+          <Route path="/convert-image" element={<ConvertImagePage />} />
+          <Route path="/pdf-to-image" element={<PdfToImagePage />} />
+          <Route path="/image-to-pdf" element={<ImageToPdfPage />} />
+          <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/disclaimer" element={<Disclaimer />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/tutorials" element={<Tutorials />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
