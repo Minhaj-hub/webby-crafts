@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { RefreshCw, Download } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { RefreshCw, Download, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -8,14 +9,68 @@ import { ProcessingIndicator } from "./ProcessingIndicator";
 import { toast } from "sonner";
 import { useAnalytics } from "@/hooks/useAnalytics";
 
-type ImageFormat = "jpeg" | "png" | "webp" | "bmp" | "gif" | "avif";
+export type ImageFormat = "jpeg" | "png" | "webp" | "bmp" | "gif" | "avif";
 
-export const ImageConverter = () => {
+// Available formats for the switcher
+const formats = [
+  { value: "png", label: "PNG" },
+  { value: "jpg", label: "JPG" },
+  { value: "webp", label: "WebP" },
+  { value: "gif", label: "GIF" },
+  { value: "bmp", label: "BMP" },
+];
+
+// Map of all valid conversions
+const validConversions: Record<string, string[]> = {
+  png: ["jpg", "webp", "gif", "bmp"],
+  jpg: ["png", "webp", "gif", "bmp"],
+  webp: ["png", "jpg", "gif"],
+  gif: ["png", "jpg", "webp"],
+  bmp: ["png", "jpg", "webp"],
+};
+
+interface ImageConverterProps {
+  defaultFormat?: ImageFormat;
+  sourceFormat?: string;
+  acceptedInputFormats?: string[];
+  title?: string;
+  description?: string;
+  showFormatSwitcher?: boolean;
+}
+
+export const ImageConverter = ({
+  defaultFormat = "png",
+  sourceFormat = "",
+  acceptedInputFormats = [".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif", ".avif"],
+  title = "Image Format Converter",
+  description = "Convert between JPEG, PNG, WebP, BMP, GIF, and AVIF formats",
+  showFormatSwitcher = false,
+}: ImageConverterProps) => {
+  const navigate = useNavigate();
   const [file, setFile] = useState<File | null>(null);
-  const [targetFormat, setTargetFormat] = useState<ImageFormat>("png");
+  const [targetFormat, setTargetFormat] = useState<ImageFormat>(defaultFormat);
   const [status, setStatus] = useState<"idle" | "processing" | "success" | "error">("idle");
   const [convertedImage, setConvertedImage] = useState<string | null>(null);
   const { logToolUsage, logFileConversion } = useAnalytics();
+
+  // Normalize formats for the switcher
+  const normalizedSource = sourceFormat.toLowerCase() === "jpeg" ? "jpg" : sourceFormat.toLowerCase();
+  const normalizedTarget = (defaultFormat === "jpeg" ? "jpg" : defaultFormat).toLowerCase();
+
+  const handleSourceChange = (newSource: string) => {
+    const availableTargets = validConversions[newSource] || [];
+    let newTarget = normalizedTarget;
+    if (!availableTargets.includes(normalizedTarget)) {
+      newTarget = availableTargets[0] || "png";
+    }
+    navigate(`/${newSource}-to-${newTarget}`);
+  };
+
+  const handleTargetChange = (newTarget: string) => {
+    navigate(`/${normalizedSource}-to-${newTarget}`);
+  };
+
+  const availableTargets = validConversions[normalizedSource] || [];
 
   const handleFileSelect = (selectedFile: File) => {
     setFile(selectedFile);
@@ -29,9 +84,8 @@ export const ImageConverter = () => {
     setStatus("processing");
 
     try {
-      // Track tool usage
       logToolUsage("image_converter");
-      
+
       const img = await createImageBitmap(file);
       const canvas = document.createElement("canvas");
       canvas.width = img.width;
@@ -43,7 +97,7 @@ export const ImageConverter = () => {
       ctx.drawImage(img, 0, 0);
 
       const mimeType = `image/${targetFormat === "jpeg" ? "jpeg" : targetFormat}`;
-      
+
       canvas.toBlob(
         (blob) => {
           if (blob) {
@@ -51,8 +105,6 @@ export const ImageConverter = () => {
             setConvertedImage(url);
             setStatus("success");
             toast.success(`Image converted to ${targetFormat.toUpperCase()} successfully!`);
-            
-            // Track successful conversion
             logFileConversion(`image_to_${targetFormat}`, file.size);
           }
         },
@@ -84,40 +136,67 @@ export const ImageConverter = () => {
               <RefreshCw className="w-8 h-8 text-accent" />
             </div>
             <h2 className="text-4xl font-bold text-foreground mb-4">
-              Image Format Converter
+              {title}
             </h2>
             <p className="text-muted-foreground text-lg">
-              Convert between JPEG, PNG, WebP, BMP, GIF, and AVIF formats
+              {description}
             </p>
           </div>
 
           <Card className="p-8 shadow-lg">
             <div className="space-y-6">
-              <div>
-                <label className="text-sm font-medium text-foreground mb-2 block">
-                  Convert to:
-                </label>
-                <Select
-                  value={targetFormat}
-                  onValueChange={(value) => setTargetFormat(value as ImageFormat)}
-                >
-                  <SelectTrigger className="w-full bg-background">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-background z-50">
-                    <SelectItem value="jpeg">JPEG</SelectItem>
-                    <SelectItem value="png">PNG</SelectItem>
-                    <SelectItem value="webp">WebP</SelectItem>
-                    <SelectItem value="bmp">BMP</SelectItem>
-                    <SelectItem value="gif">GIF</SelectItem>
-                    <SelectItem value="avif">AVIF</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              {/* Format Switcher - From -> To */}
+              {showFormatSwitcher && sourceFormat && (
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 p-4 bg-secondary/30 rounded-xl border border-border/50">
+                  <div className="flex items-center gap-3">
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide text-center">From</label>
+                      <Select value={normalizedSource} onValueChange={handleSourceChange}>
+                        <SelectTrigger className="w-[120px] bg-background font-semibold">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="bg-background z-50">
+                          {formats.map((format) => (
+                            <SelectItem key={format.value} value={format.value}>
+                              {format.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="flex items-center justify-center w-10 h-10 bg-primary/10 rounded-full mt-5">
+                      <ArrowRight className="w-5 h-5 text-primary" />
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide text-center">To</label>
+                      <Select value={normalizedTarget} onValueChange={handleTargetChange}>
+                        <SelectTrigger className="w-[120px] bg-background font-semibold">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="bg-background z-50">
+                          {formats
+                            .filter((format) => availableTargets.includes(format.value))
+                            .map((format) => (
+                              <SelectItem key={format.value} value={format.value}>
+                                {format.label}
+                              </SelectItem>
+                            ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <p className="text-sm text-muted-foreground sm:ml-2">
+                    Switch formats instantly
+                  </p>
+                </div>
+              )}
 
               <FileUploadZone
                 onFileSelect={handleFileSelect}
-                acceptedFormats={[".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif", ".avif"]}
+                acceptedFormats={acceptedInputFormats}
                 icon={<RefreshCw className="w-8 h-8 text-accent" />}
                 title="Drop your image to convert"
                 description="or click to browse"

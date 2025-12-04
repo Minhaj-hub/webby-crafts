@@ -2,32 +2,83 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PdfToImage } from "@/components/PdfToImage";
 import { SEOHead } from "@/components/SEOHead";
+import { SchemaMarkup } from "@/components/SchemaMarkup";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { FileText, Image, Download, Eye } from "lucide-react";
 
 const PdfToImagePage = () => {
+  const faqs = [
+    {
+      question: "Is this PDF to image converter free?",
+      answer: "Yes, our tool is completely free to use. You can convert as many PDF pages to images as you need without any cost."
+    },
+    {
+      question: "What image formats can I get?",
+      answer: "You can convert your PDF pages into high-quality PNG or JPEG images. Both formats are widely supported and perfect for sharing."
+    },
+    {
+      question: "Is it secure?",
+      answer: "Absolutely. Your files are processed locally in your browser and are never uploaded to our servers, ensuring your documents remain private."
+    },
+    {
+      question: "Can I convert multiple pages?",
+      answer: "Yes, our tool automatically extracts every page from your PDF file and converts them into separate images."
+    },
+    {
+      question: "Can I download all images at once?",
+      answer: "Yes, you can download individual pages or get all converted images in a single ZIP file for convenience."
+    },
+    {
+      question: "Does it work on mobile?",
+      answer: "Yes, our converter is fully responsive and works on all devices, including smartphones and tablets."
+    }
+  ];
+
+  const howToSteps = [
+    {
+      name: "Upload PDF",
+      text: "Drag and drop your PDF file or click to select it from your device."
+    },
+    {
+      name: "Conversion",
+      text: "The tool automatically processes the PDF and converts each page into an image."
+    },
+    {
+      name: "Download",
+      text: "Download individual page images or grab them all in a ZIP file."
+    }
+  ];
+
   return (
     <>
-      <SEOHead 
-        title="PDF to Image Converter - Convert PDF Pages to JPEG, PNG Online"
-        description="Convert PDF to images online for free. Extract pages from PDF files as high-quality JPEG or PNG images. Fast, secure PDF to image conversion."
-        keywords="PDF to image, convert PDF to JPEG, PDF to PNG, extract PDF pages, PDF converter"
+      <SEOHead
+        title="Free PDF to Image Converter — Convert PDF to JPG, PNG"
+        description="Convert PDF pages to high-quality JPG or PNG images online for free. Extract images from PDF documents instantly. Secure and fast."
+        keywords="pdf to image, convert pdf to jpg, pdf to png, extract pdf pages, free pdf converter, online pdf tool"
         canonicalUrl="https://convert-kitty.web.app/pdf-to-image"
       />
-      
+
+      <SchemaMarkup
+        toolName="Free PDF to Image Converter"
+        toolDescription="A secure, free online tool to convert PDF pages into high-quality JPG or PNG images. Extract pages instantly in your browser."
+        toolUrl="https://convert-kitty.web.app/pdf-to-image"
+        faqs={faqs}
+        howToSteps={howToSteps}
+      />
+
       <div className="min-h-screen bg-background">
         <Navbar />
-        
+
         <main className="pt-16">
           {/* Hero Section */}
           <section className="py-16 bg-gradient-hero text-white">
             <div className="container mx-auto px-4 text-center">
               <h1 className="text-5xl font-bold mb-6">
-                PDF to Image Converter
+                Free PDF to Image Converter
               </h1>
               <p className="text-xl mb-8 max-w-3xl mx-auto">
-                Convert PDF pages to high-quality images instantly. Extract individual pages 
+                Convert PDF pages to high-quality images instantly. Extract individual pages
                 or convert entire documents to JPEG or PNG format with perfect clarity.
               </p>
               <div className="flex flex-wrap justify-center gap-4 mb-8">
@@ -40,6 +91,24 @@ const PdfToImagePage = () => {
 
           {/* Tool Section */}
           <PdfToImage />
+
+          {/* Tool Description with Keywords */}
+          <section className="py-12 bg-background">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto prose dark:prose-invert">
+                <h2 className="text-3xl font-bold mb-6">Best Free PDF to Image Converter</h2>
+                <p className="text-lg text-muted-foreground mb-6">
+                  Need to turn a PDF document into image files? Our **Free PDF to Image Converter** allows you to convert PDF pages into high-quality **JPG or PNG** images in seconds. This is perfect for sharing specific pages on social media, inserting them into presentations, or simply viewing them as images.
+                </p>
+                <p className="text-lg text-muted-foreground mb-6">
+                  You can upload any PDF file, and our tool will extract each page as a separate image. You can choose to download individual pages or get all of them at once as a ZIP file. We ensure that the resolution and clarity of your original document are preserved in the converted images.
+                </p>
+                <p className="text-lg text-muted-foreground">
+                  Security is paramount. Your PDF files are processed **entirely within your browser** and are never sent to our servers. This means your sensitive documents remain private and secure throughout the conversion process. Try it today for free!
+                </p>
+              </div>
+            </div>
+          </section>
 
           {/* Features Section */}
           <section className="py-16 bg-secondary/20">
@@ -105,27 +174,15 @@ const PdfToImagePage = () => {
               <h2 className="text-3xl font-bold text-center mb-12">How to Convert PDF to Images</h2>
               <div className="max-w-4xl mx-auto">
                 <div className="grid md:grid-cols-3 gap-8">
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl font-bold text-primary">1</span>
+                  {howToSteps.map((step, index) => (
+                    <div key={index} className="text-center">
+                      <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span className="text-2xl font-bold text-primary">{index + 1}</span>
+                      </div>
+                      <h3 className="font-semibold mb-2">{step.name}</h3>
+                      <p className="text-muted-foreground">{step.text}</p>
                     </div>
-                    <h3 className="font-semibold mb-2">Upload PDF</h3>
-                    <p className="text-muted-foreground">Drag and drop your PDF file or click to browse and select</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl font-bold text-primary">2</span>
-                    </div>
-                    <h3 className="font-semibold mb-2">Auto Convert</h3>
-                    <p className="text-muted-foreground">Our tool automatically extracts all pages as high-quality images</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl font-bold text-primary">3</span>
-                    </div>
-                    <h3 className="font-semibold mb-2">Download Images</h3>
-                    <p className="text-muted-foreground">Download individual pages or all images at once</p>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -136,27 +193,17 @@ const PdfToImagePage = () => {
             <div className="container mx-auto px-4">
               <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
               <div className="max-w-3xl mx-auto space-y-6">
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-2">What's the maximum PDF file size I can convert?</h3>
-                  <p className="text-muted-foreground">You can convert PDF files up to 20MB in size. For larger files, consider splitting them into smaller documents first.</p>
-                </Card>
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-2">Will the image quality be good enough for printing?</h3>
-                  <p className="text-muted-foreground">Yes! We use 2x scaling to ensure high-resolution output suitable for both digital use and printing.</p>
-                </Card>
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-2">Can I convert password-protected PDFs?</h3>
-                  <p className="text-muted-foreground">Currently, we don't support password-protected PDFs. Please remove the password protection before uploading.</p>
-                </Card>
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-2">How many pages can I convert at once?</h3>
-                  <p className="text-muted-foreground">There's no limit on the number of pages. Our tool will convert all pages in your PDF document automatically.</p>
-                </Card>
+                {faqs.map((faq, index) => (
+                  <Card key={index} className="p-6">
+                    <h3 className="font-semibold mb-2">{faq.question}</h3>
+                    <p className="text-muted-foreground">{faq.answer}</p>
+                  </Card>
+                ))}
               </div>
             </div>
           </section>
         </main>
-        
+
         <Footer />
       </div>
     </>

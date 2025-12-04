@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 export const ImageCompressor = () => {
   const [files, setFiles] = useState<File[]>([]);
-  const [filePreviews, setFilePreviews] = useState<{file: File, preview: string}[]>([]);
+  const [filePreviews, setFilePreviews] = useState<{ file: File, preview: string }[]>([]);
   const [quality, setQuality] = useState([80]);
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -23,17 +23,17 @@ export const ImageCompressor = () => {
 
   const handleFileSelect = (selectedFiles: File | File[]) => {
     const fileArray = Array.isArray(selectedFiles) ? selectedFiles : [selectedFiles];
-    
+
     // Add new files to existing ones instead of replacing
     const newFiles = [...files, ...fileArray];
     setFiles(newFiles);
-    
+
     // Create previews for new files only
-    const newPreviews: {file: File, preview: string}[] = [];
+    const newPreviews: { file: File, preview: string }[] = [];
     fileArray.forEach(file => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        newPreviews.push({file, preview: e.target?.result as string});
+        newPreviews.push({ file, preview: e.target?.result as string });
         if (newPreviews.length === fileArray.length) {
           setFilePreviews(prev => [...prev, ...newPreviews]);
         }
@@ -44,9 +44,9 @@ export const ImageCompressor = () => {
 
   const startCompression = () => {
     if (files.length === 0) return;
-    
+
     logToolUsage("image_compressor");
-    
+
     navigate("/compression-results", {
       state: {
         files,
@@ -86,7 +86,7 @@ export const ImageCompressor = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-6">
             <h1 className="text-3xl font-bold text-foreground mb-2">
-              Image Compressor
+              Free Online Image Compressor
             </h1>
             <p className="text-muted-foreground">
               Reduce file sizes by up to 90% without losing quality
@@ -110,9 +110,9 @@ export const ImageCompressor = () => {
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <p className="text-sm font-medium">{files.length} image(s) selected</p>
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
+                      <Button
+                        variant="ghost"
+                        size="sm"
                         onClick={() => {
                           setFiles([]);
                           setFilePreviews([]);
@@ -126,16 +126,16 @@ export const ImageCompressor = () => {
                         <div key={index} className="flex items-center gap-3 p-3 bg-secondary/20 rounded-lg">
                           <Dialog>
                             <DialogTrigger asChild>
-                              <img 
-                                src={item.preview} 
+                              <img
+                                src={item.preview}
                                 alt={item.file.name}
                                 className="w-16 h-16 object-cover rounded border flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
                               />
                             </DialogTrigger>
                             <DialogContent className="max-w-4xl">
                               <div className="flex flex-col items-center space-y-4">
-                                <img 
-                                  src={item.preview} 
+                                <img
+                                  src={item.preview}
                                   alt={item.file.name}
                                   className="max-w-full max-h-[70vh] object-contain"
                                 />
@@ -151,17 +151,17 @@ export const ImageCompressor = () => {
                             <p className="text-xs text-muted-foreground">{formatFileSize(item.file.size)}</p>
                           </div>
                           <div className="flex gap-1">
-                            <Button 
-                              variant="ghost" 
-                              size="icon" 
+                            <Button
+                              variant="ghost"
+                              size="icon"
                               className="flex-shrink-0"
                               onClick={() => setPreviewImage(item.preview)}
                             >
                               <Eye className="w-4 h-4" />
                             </Button>
-                            <Button 
-                              variant="ghost" 
-                              size="icon" 
+                            <Button
+                              variant="ghost"
+                              size="icon"
                               className="flex-shrink-0"
                               onClick={() => {
                                 const newFiles = files.filter((_, i) => i !== index);
@@ -191,7 +191,7 @@ export const ImageCompressor = () => {
                         <span className="text-sm font-mono">{quality[0]}%</span>
                       </div>
                     </div>
-                    
+
                     <Slider
                       value={quality}
                       onValueChange={setQuality}
@@ -200,12 +200,12 @@ export const ImageCompressor = () => {
                       step={5}
                       className="w-full"
                     />
-                    
+
                     <div className="flex justify-between text-xs text-muted-foreground">
                       <span>Smaller file</span>
                       <span>Better quality</span>
                     </div>
-                    
+
                     {/* Estimated reduction */}
                     <div className="p-3 bg-primary/5 rounded-lg border border-primary/10">
                       <div className="flex items-center gap-2 mb-2">
@@ -235,13 +235,13 @@ export const ImageCompressor = () => {
 
             </div>
           </Card>
-          
+
           {/* Preview Dialog */}
           {previewImage && (
             <Dialog open={!!previewImage} onOpenChange={() => setPreviewImage(null)}>
               <DialogContent className="max-w-4xl">
-                <img 
-                  src={previewImage} 
+                <img
+                  src={previewImage}
                   alt="Preview"
                   className="max-w-full max-h-[80vh] object-contain mx-auto"
                 />

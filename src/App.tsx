@@ -16,6 +16,7 @@ import ConvertImagePage from "./pages/ConvertImagePage";
 import PdfToImagePage from "./pages/PdfToImagePage";
 import ImageToPdfPage from "./pages/ImageToPdfPage";
 import CompressionResultsPage from "./pages/CompressionResultsPage";
+import ImageConversionPage from "./pages/ImageConversionPage";
 // Initialize Firebase Analytics
 // import { analytics } from "@/lib/firebase";
 import { getAnalytics } from "firebase/analytics";
@@ -57,6 +58,29 @@ const App = () => (
           <Route path="/compress-image" element={<CompressImagePage />} />
           <Route path="/compression-results" element={<CompressionResultsPage />} />
           <Route path="/convert-image" element={<ConvertImagePage />} />
+          {/* Dynamic conversion pages - all use the same template */}
+          {/* PNG conversions */}
+          <Route path="/png-to-jpg" element={<ImageConversionPage />} />
+          <Route path="/png-to-webp" element={<ImageConversionPage />} />
+          <Route path="/png-to-gif" element={<ImageConversionPage />} />
+          <Route path="/png-to-bmp" element={<ImageConversionPage />} />
+          {/* JPG conversions */}
+          <Route path="/jpg-to-png" element={<ImageConversionPage />} />
+          <Route path="/jpg-to-webp" element={<ImageConversionPage />} />
+          <Route path="/jpg-to-gif" element={<ImageConversionPage />} />
+          <Route path="/jpg-to-bmp" element={<ImageConversionPage />} />
+          {/* WebP conversions */}
+          <Route path="/webp-to-png" element={<ImageConversionPage />} />
+          <Route path="/webp-to-jpg" element={<ImageConversionPage />} />
+          <Route path="/webp-to-gif" element={<ImageConversionPage />} />
+          {/* GIF conversions */}
+          <Route path="/gif-to-png" element={<ImageConversionPage />} />
+          <Route path="/gif-to-jpg" element={<ImageConversionPage />} />
+          <Route path="/gif-to-webp" element={<ImageConversionPage />} />
+          {/* BMP conversions */}
+          <Route path="/bmp-to-png" element={<ImageConversionPage />} />
+          <Route path="/bmp-to-jpg" element={<ImageConversionPage />} />
+          <Route path="/bmp-to-webp" element={<ImageConversionPage />} />
           <Route path="/pdf-to-image" element={<PdfToImagePage />} />
           <Route path="/image-to-pdf" element={<ImageToPdfPage />} />
           <Route path="/terms" element={<TermsOfService />} />

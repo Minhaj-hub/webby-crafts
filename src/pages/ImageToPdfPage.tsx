@@ -2,32 +2,83 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ImageToPdf } from "@/components/ImageToPdf";
 import { SEOHead } from "@/components/SEOHead";
+import { SchemaMarkup } from "@/components/SchemaMarkup";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Images, FileText, Layers, Briefcase } from "lucide-react";
 
 const ImageToPdfPage = () => {
+  const faqs = [
+    {
+      question: "Is this image to PDF converter free?",
+      answer: "Yes, our tool is 100% free. You can combine as many images as you like into PDF documents without any cost."
+    },
+    {
+      question: "How many images can I combine?",
+      answer: "You can combine up to 50 images into a single PDF file. This is perfect for creating portfolios, albums, or document compilations."
+    },
+    {
+      question: "Can I reorder the images?",
+      answer: "Yes, absolutely. After uploading, you can simply drag and drop your images to arrange them in the exact order you want them to appear in the PDF."
+    },
+    {
+      question: "Is my data secure?",
+      answer: "Your security is our top priority. All processing happens locally in your browser, meaning your images are never uploaded to our servers."
+    },
+    {
+      question: "What image formats are supported?",
+      answer: "We support all major image formats including JPG, JPEG, PNG, WebP, BMP, and GIF."
+    },
+    {
+      question: "Can I choose page size?",
+      answer: "Yes, you can select from standard page sizes like A4, Letter, and Legal, or choose to have the page size automatically fit the image."
+    }
+  ];
+
+  const howToSteps = [
+    {
+      name: "Upload Images",
+      text: "Select multiple images from your device or drag and drop them into the tool."
+    },
+    {
+      name: "Arrange Order",
+      text: "Drag and drop the images to reorder them as needed for your PDF."
+    },
+    {
+      name: "Convert & Download",
+      text: "Click 'Generate PDF' to create your document and download it instantly."
+    }
+  ];
+
   return (
     <>
-      <SEOHead 
-        title="Images to PDF Converter - Combine JPEG, PNG into PDF Online"
-        description="Convert multiple images to PDF online for free. Combine JPEG, PNG, WebP images into a single PDF document. Perfect for creating portfolios and reports."
-        keywords="images to PDF, combine images PDF, JPEG to PDF, PNG to PDF, create PDF from images"
+      <SEOHead
+        title="Free Image to PDF Converter — Convert JPG, PNG to PDF"
+        description="Convert JPG, PNG, and other images to PDF online for free. Combine multiple images into a single PDF file. Fast, secure, and easy to use."
+        keywords="image to pdf, jpg to pdf, png to pdf, combine images to pdf, free pdf converter, online pdf tool"
         canonicalUrl="https://convert-kitty.web.app/image-to-pdf"
       />
-      
+
+      <SchemaMarkup
+        toolName="Free Image to PDF Converter"
+        toolDescription="A simple, free online tool to combine multiple images (JPG, PNG, WebP) into a single, high-quality PDF document. Secure browser-based processing."
+        toolUrl="https://convert-kitty.web.app/image-to-pdf"
+        faqs={faqs}
+        howToSteps={howToSteps}
+      />
+
       <div className="min-h-screen bg-background">
         <Navbar />
-        
+
         <main className="pt-16">
           {/* Hero Section */}
           <section className="py-16 bg-gradient-hero text-white">
             <div className="container mx-auto px-4 text-center">
               <h1 className="text-5xl font-bold mb-6">
-                Images to PDF Converter
+                Free Image to PDF Converter
               </h1>
               <p className="text-xl mb-8 max-w-3xl mx-auto">
-                Combine multiple images into a single PDF document instantly. Perfect for creating 
+                Combine multiple images into a single PDF document instantly. Perfect for creating
                 portfolios, reports, presentations, and digital albums with professional quality.
               </p>
               <div className="flex flex-wrap justify-center gap-4 mb-8">
@@ -40,6 +91,24 @@ const ImageToPdfPage = () => {
 
           {/* Tool Section */}
           <ImageToPdf />
+
+          {/* Tool Description with Keywords */}
+          <section className="py-12 bg-background">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto prose dark:prose-invert">
+                <h2 className="text-3xl font-bold mb-6">Best Free Image to PDF Converter</h2>
+                <p className="text-lg text-muted-foreground mb-6">
+                  Create professional PDF documents from your images with our **Free Image to PDF Converter**. Whether you need to compile a portfolio, create a digital album, or share documents, our tool makes it easy to combine multiple images into a single, high-quality PDF file.
+                </p>
+                <p className="text-lg text-muted-foreground mb-6">
+                  We support **JPG, PNG, WebP**, and other popular image formats. You can arrange your images in any order you like before generating the PDF. The tool automatically optimizes the images to ensure the final PDF is of a manageable size without sacrificing quality.
+                </p>
+                <p className="text-lg text-muted-foreground">
+                  Like all our tools, the conversion happens **locally in your browser**, so your personal photos and documents are never uploaded to any server. This guarantees 100% privacy and security for your data. Try it now and see how easy it is to create PDFs from your images!
+                </p>
+              </div>
+            </div>
+          </section>
 
           {/* Use Cases Section */}
           <section className="py-16 bg-secondary/20">
@@ -105,27 +174,15 @@ const ImageToPdfPage = () => {
               <h2 className="text-3xl font-bold text-center mb-12">How to Create PDF from Images</h2>
               <div className="max-w-4xl mx-auto">
                 <div className="grid md:grid-cols-4 gap-6">
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl font-bold text-primary">1</span>
+                  {howToSteps.map((step, index) => (
+                    <div key={index} className="text-center">
+                      <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span className="text-2xl font-bold text-primary">{index + 1}</span>
+                      </div>
+                      <h3 className="font-semibold mb-2">{step.name}</h3>
+                      <p className="text-muted-foreground">{step.text}</p>
                     </div>
-                    <h3 className="font-semibold mb-2">Upload Images</h3>
-                    <p className="text-muted-foreground">Select multiple images in JPEG, PNG, or WebP format</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl font-bold text-primary">2</span>
-                    </div>
-                    <h3 className="font-semibold mb-2">Arrange Order</h3>
-                    <p className="text-muted-foreground">Drag and drop to reorder images as needed</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl font-bold text-primary">3</span>
-                    </div>
-                    <h3 className="font-semibold mb-2">Choose Settings</h3>
-                    <p className="text-muted-foreground">Select page size, orientation, and quality options</p>
-                  </div>
+                  ))}
                   <div className="text-center">
                     <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                       <span className="text-2xl font-bold text-primary">4</span>
@@ -170,27 +227,17 @@ const ImageToPdfPage = () => {
             <div className="container mx-auto px-4">
               <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
               <div className="max-w-3xl mx-auto space-y-6">
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-2">How many images can I combine into one PDF?</h3>
-                  <p className="text-muted-foreground">You can combine up to 50 images in a single PDF. For larger collections, consider creating multiple PDFs.</p>
-                </Card>
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-2">What image formats are supported?</h3>
-                  <p className="text-muted-foreground">We support JPEG, PNG, WebP, BMP, and GIF formats. All images are converted with high quality preservation.</p>
-                </Card>
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-2">Can I change the order of images after uploading?</h3>
-                  <p className="text-muted-foreground">Yes! Simply drag and drop the images in the preview area to reorder them before generating your PDF.</p>
-                </Card>
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-2">What page sizes are available?</h3>
-                  <p className="text-muted-foreground">We offer standard sizes like A4, Letter, and Legal, plus the ability to auto-fit images to optimal dimensions.</p>
-                </Card>
+                {faqs.map((faq, index) => (
+                  <Card key={index} className="p-6">
+                    <h3 className="font-semibold mb-2">{faq.question}</h3>
+                    <p className="text-muted-foreground">{faq.answer}</p>
+                  </Card>
+                ))}
               </div>
             </div>
           </section>
         </main>
-        
+
         <Footer />
       </div>
     </>

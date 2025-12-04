@@ -2,37 +2,88 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ImageConverter } from "@/components/ImageConverter";
 import { SEOHead } from "@/components/SEOHead";
+import { SchemaMarkup } from "@/components/SchemaMarkup";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { RefreshCw, Palette, Globe, Smartphone } from "lucide-react";
 
 const ConvertImagePage = () => {
+  const faqs = [
+    {
+      question: "Is this image converter free?",
+      answer: "Yes, our image converter is 100% free to use. You can convert as many images as you want without any cost."
+    },
+    {
+      question: "What formats are supported?",
+      answer: "We support a wide range of formats including JPEG, PNG, WebP, GIF, BMP, and AVIF. You can convert between any of these formats."
+    },
+    {
+      question: "Is it secure?",
+      answer: "Yes, your privacy is our priority. All conversions happen locally in your browser, so your images are never uploaded to our servers."
+    },
+    {
+      question: "Can I convert multiple files?",
+      answer: "Currently, we support single file conversion to ensure the best quality, but we are working on batch conversion features."
+    },
+    {
+      question: "Does it reduce image quality?",
+      answer: "We strive to maintain the highest possible quality during conversion. However, converting from a lossless format (like PNG) to a lossy one (like JPEG) may result in some quality change."
+    },
+    {
+      question: "Do I need to install software?",
+      answer: "No, our tool is entirely web-based. You don't need to download or install any software to use it."
+    }
+  ];
+
+  const howToSteps = [
+    {
+      name: "Upload Image",
+      text: "Click to browse or drag and drop your image file into the converter."
+    },
+    {
+      name: "Select Format",
+      text: "Choose your desired output format (e.g., JPEG, PNG, WebP) from the dropdown menu."
+    },
+    {
+      name: "Convert & Download",
+      text: "Click the convert button and then download your newly formatted image instantly."
+    }
+  ];
+
   return (
     <>
-      <SEOHead 
-        title="Free Image Converter - Convert JPEG, PNG, WebP, GIF Online"
-        description="Convert images between formats online for free. JPEG to PNG, PNG to WebP, GIF to JPEG and more. Fast, secure image format conversion in your browser."
-        keywords="image converter, convert images, JPEG to PNG, PNG to WebP, image format converter, file format conversion"
+      <SEOHead
+        title="Free Online Image Converter — Convert JPG, PNG, WebP Instantly"
+        description="Convert images online for free. Fast, secure, high-quality conversion between JPG, PNG, WebP, BMP, and GIF formats. No signup required."
+        keywords="image converter, convert images, JPEG to PNG, PNG to WebP, image format converter, file format conversion, free online tool"
         canonicalUrl="https://convert-kitty.web.app/convert-image"
       />
-      
+
+      <SchemaMarkup
+        toolName="Free Online Image Converter"
+        toolDescription="A versatile, free online tool to convert images between JPEG, PNG, WebP, BMP, and GIF formats instantly. Secure browser-based processing."
+        toolUrl="https://convert-kitty.web.app/convert-image"
+        faqs={faqs}
+        howToSteps={howToSteps}
+      />
+
       <div className="min-h-screen bg-background">
         <Navbar />
-        
+
         <main className="pt-16">
           {/* Hero Section */}
           <section className="py-16 bg-gradient-hero text-white">
             <div className="container mx-auto px-4 text-center">
               <h1 className="text-5xl font-bold mb-6">
-                Free Online Image Format Converter
+                Free Online Image Converter
               </h1>
               <p className="text-xl mb-8 max-w-3xl mx-auto">
-                Convert between JPEG, PNG, WebP, GIF, and more image formats instantly. 
+                Convert between JPEG, PNG, WebP, GIF, and more image formats instantly.
                 Perfect for web optimization, compatibility, and professional workflows.
               </p>
               <div className="flex flex-wrap justify-center gap-4 mb-8">
                 <Badge className="bg-white/20 text-white">20+ Formats Supported</Badge>
-                <Badge className="bg-white/20 text-white">Batch Conversion</Badge>
+                <Badge className="bg-white/20 text-white">Fast Conversion</Badge>
                 <Badge className="bg-white/20 text-white">No Quality Loss</Badge>
               </div>
             </div>
@@ -40,6 +91,24 @@ const ConvertImagePage = () => {
 
           {/* Tool Section */}
           <ImageConverter />
+
+          {/* Tool Description with Keywords */}
+          <section className="py-12 bg-background">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto prose dark:prose-invert">
+                <h2 className="text-3xl font-bold mb-6">Best Free Online Image Converter</h2>
+                <p className="text-lg text-muted-foreground mb-6">
+                  Our **Free Online Image Converter** is the perfect tool for transforming your images into the format you need. Whether you need to convert a PNG to JPG for a website, a WebP to PNG for editing, or any other combination, we've got you covered.
+                </p>
+                <p className="text-lg text-muted-foreground mb-6">
+                  We support all major image formats including **JPEG, PNG, WebP, BMP, GIF, and AVIF**. Our converter ensures that your images retain their original quality during the conversion process. Like our other tools, all processing is done **locally in your browser**, ensuring your files remain private and secure.
+                </p>
+                <p className="text-lg text-muted-foreground">
+                  Simply upload your images, select the target format, and download your converted files in seconds. It's fast, free, and easy to use. No need to install heavy software or register for an account. Just upload, convert, and download!
+                </p>
+              </div>
+            </div>
+          </section>
 
           {/* Features Section */}
           <section className="py-16 bg-secondary/20">
@@ -103,27 +172,15 @@ const ConvertImagePage = () => {
               <h2 className="text-3xl font-bold text-center mb-12">How to Convert Images</h2>
               <div className="max-w-4xl mx-auto">
                 <div className="grid md:grid-cols-3 gap-8">
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl font-bold text-primary">1</span>
+                  {howToSteps.map((step, index) => (
+                    <div key={index} className="text-center">
+                      <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span className="text-2xl font-bold text-primary">{index + 1}</span>
+                      </div>
+                      <h3 className="font-semibold mb-2">{step.name}</h3>
+                      <p className="text-muted-foreground">{step.text}</p>
                     </div>
-                    <h3 className="font-semibold mb-2">Upload Images</h3>
-                    <p className="text-muted-foreground">Select one or multiple images in any supported format</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl font-bold text-primary">2</span>
-                    </div>
-                    <h3 className="font-semibold mb-2">Choose Format</h3>
-                    <p className="text-muted-foreground">Select your desired output format from the dropdown</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl font-bold text-primary">3</span>
-                    </div>
-                    <h3 className="font-semibold mb-2">Download</h3>
-                    <p className="text-muted-foreground">Get your converted images instantly in the new format</p>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -134,27 +191,17 @@ const ConvertImagePage = () => {
             <div className="container mx-auto px-4">
               <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
               <div className="max-w-3xl mx-auto space-y-6">
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-2">Which format should I choose for my website?</h3>
-                  <p className="text-muted-foreground">WebP offers the best compression for web use. PNG is ideal for images with transparency, while JPEG works best for photographs.</p>
-                </Card>
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-2">Will converting reduce image quality?</h3>
-                  <p className="text-muted-foreground">Converting from lossless to lossy formats may reduce quality. We use optimal settings to maintain the best possible quality during conversion.</p>
-                </Card>
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-2">Can I convert multiple images at once?</h3>
-                  <p className="text-muted-foreground">Yes! Our batch conversion feature allows you to convert multiple images simultaneously, saving you time.</p>
-                </Card>
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-2">What's the difference between JPEG and PNG?</h3>
-                  <p className="text-muted-foreground">JPEG is best for photos with smaller file sizes, while PNG supports transparency and is ideal for graphics and logos.</p>
-                </Card>
+                {faqs.map((faq, index) => (
+                  <Card key={index} className="p-6">
+                    <h3 className="font-semibold mb-2">{faq.question}</h3>
+                    <p className="text-muted-foreground">{faq.answer}</p>
+                  </Card>
+                ))}
               </div>
             </div>
           </section>
         </main>
-        
+
         <Footer />
       </div>
     </>
