@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 
+// Google Ads - Commented out until website gets traffic
+/*
 declare global {
   interface Window {
     adsbygoogle: any[];
@@ -33,3 +35,12 @@ export const FeatureAd = ({ position, feature }: FeatureAdProps) => {
     </div>
   );
 };
+*/
+
+// Placeholder export until ads are enabled
+interface FeatureAdProps {
+  position: 'left' | 'right';
+  feature: 'compress' | 'convert' | 'imagetopdf' | 'pdftoimage';
+}
+
+export const FeatureAd = ({ position, feature }: FeatureAdProps) => null;

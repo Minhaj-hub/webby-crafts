@@ -13,7 +13,7 @@ export const Hero = () => {
     },
     {
       icon: RefreshCw,
-      title: "Image Converter", 
+      title: "Image Converter",
       description: "Convert between JPG, PNG, WebP and more formats",
       path: "/convert-image",
       action: "Convert"
@@ -42,10 +42,10 @@ export const Hero = () => {
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-full blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 rounded-full blur-3xl" />
       </div>
-      
-      <div className="container mx-auto px-4 py-16 relative z-10">
+
+      <div className="container mx-auto px-4 pt-32 pb-16 relative z-10">
         <div className="max-w-7xl mx-auto">
-          
+
           {/* Main Content */}
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full border border-gray-200 dark:border-gray-700 shadow-sm">
@@ -61,7 +61,7 @@ export const Hero = () => {
                 Instantly & Securely
               </span>
             </h1>
-            
+
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed">
               Professional-grade image compression, format conversion, and PDF tools.
               <span className="block mt-2 font-semibold text-gray-700 dark:text-gray-300">
@@ -98,24 +98,24 @@ export const Hero = () => {
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full mx-auto" />
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
               {tools.map((tool, index) => {
                 const Icon = tool.icon;
                 return (
-                  <Card 
+                  <Card
                     key={index}
                     className="group relative p-8 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 rounded-2xl transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 dark:hover:shadow-blue-500/5 hover:border-blue-200 dark:hover:border-blue-700 hover:-translate-y-2 overflow-hidden"
                   >
                     {/* Gradient overlay on hover */}
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-950/20 dark:to-indigo-950/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    
+
                     <div className="relative flex flex-col h-full">
                       {/* Icon */}
                       <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center group-hover:from-blue-100 group-hover:to-indigo-100 dark:group-hover:from-blue-900/50 dark:group-hover:to-indigo-900/50 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-lg mb-6">
                         <Icon className="w-8 h-8 text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-500" />
                       </div>
-                      
+
                       {/* Content - grows to fill space */}
                       <div className="flex-1 space-y-3 mb-6">
                         <h4 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-900 dark:group-hover:text-blue-100 transition-colors duration-300">
@@ -125,9 +125,9 @@ export const Hero = () => {
                           {tool.description}
                         </p>
                       </div>
-                      
+
                       {/* Button - always at bottom */}
-                      <Button 
+                      <Button
                         className="w-full bg-gradient-hero hover:opacity-90 text-white shadow-glow hover:shadow-xl transition-all duration-300 rounded-xl font-semibold py-3 group-hover:scale-105 mt-auto"
                         onClick={() => window.location.href = tool.path}
                       >

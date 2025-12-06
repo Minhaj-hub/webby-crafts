@@ -17,32 +17,31 @@ import PdfToImagePage from "./pages/PdfToImagePage";
 import ImageToPdfPage from "./pages/ImageToPdfPage";
 import CompressionResultsPage from "./pages/CompressionResultsPage";
 import ImageConversionPage from "./pages/ImageConversionPage";
-// Initialize Firebase Analytics
-// import { analytics } from "@/lib/firebase";
-import { getAnalytics } from "firebase/analytics";
 
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useScrollToTop } from "@/hooks/useScrollToTop";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 const queryClient = new QueryClient();
 
-// Component to track page views
+// Component to track page views with Firebase Analytics
 const AnalyticsTracker = () => {
   const location = useLocation();
+  const { logPageView } = useAnalytics();
 
   useEffect(() => {
-    if (getAnalytics) {
-      // Log page view with Firebase Analytics
-      // @ts-ignore
-      if (typeof window !== "undefined" && window.gtag) {
-        // @ts-ignore
-        window.gtag("config", import.meta.env.VITE_FIREBASE_MEASUREMENT_ID, {
-          page_path: location.pathname + location.search,
-        });
-      }
-    }
-  }, [location]);
+    // Log page view on route change
+    const pageTitle = document.title;
+    logPageView(location.pathname + location.search, pageTitle);
+  }, [location, logPageView]);
 
+  return null;
+};
+
+// Component to scroll to top on route changes
+const ScrollToTop = () => {
+  useScrollToTop();
   return null;
 };
 
@@ -52,6 +51,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <AnalyticsTracker />
         <Routes>
           <Route path="/" element={<Index />} />

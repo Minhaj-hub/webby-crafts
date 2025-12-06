@@ -4,6 +4,7 @@ import { ImageToPdf } from "@/components/ImageToPdf";
 import { SEOHead } from "@/components/SEOHead";
 import { SchemaMarkup } from "@/components/SchemaMarkup";
 import { Card } from "@/components/ui/card";
+import { getCanonicalUrl } from "@/config/app.config";
 import { Badge } from "@/components/ui/badge";
 import { Images, FileText, Layers, Briefcase } from "lucide-react";
 
@@ -56,13 +57,13 @@ const ImageToPdfPage = () => {
         title="Free Image to PDF Converter — Convert JPG, PNG to PDF"
         description="Convert JPG, PNG, and other images to PDF online for free. Combine multiple images into a single PDF file. Fast, secure, and easy to use."
         keywords="image to pdf, jpg to pdf, png to pdf, combine images to pdf, free pdf converter, online pdf tool"
-        canonicalUrl="https://convert-kitty.web.app/image-to-pdf"
+        canonicalUrl="https://convertkit.web.app/image-to-pdf"
       />
 
       <SchemaMarkup
         toolName="Free Image to PDF Converter"
         toolDescription="A simple, free online tool to combine multiple images (JPG, PNG, WebP) into a single, high-quality PDF document. Secure browser-based processing."
-        toolUrl="https://convert-kitty.web.app/image-to-pdf"
+        toolUrl="https://convertkit.web.app/image-to-pdf"
         faqs={faqs}
         howToSteps={howToSteps}
       />
@@ -71,24 +72,6 @@ const ImageToPdfPage = () => {
         <Navbar />
 
         <main className="pt-16">
-          {/* Hero Section */}
-          <section className="py-16 bg-gradient-hero text-white">
-            <div className="container mx-auto px-4 text-center">
-              <h1 className="text-5xl font-bold mb-6">
-                Free Image to PDF Converter
-              </h1>
-              <p className="text-xl mb-8 max-w-3xl mx-auto">
-                Combine multiple images into a single PDF document instantly. Perfect for creating
-                portfolios, reports, presentations, and digital albums with professional quality.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4 mb-8">
-                <Badge className="bg-white/20 text-white">Multiple Images</Badge>
-                <Badge className="bg-white/20 text-white">Custom Page Sizes</Badge>
-                <Badge className="bg-white/20 text-white">Professional Quality</Badge>
-              </div>
-            </div>
-          </section>
-
           {/* Tool Section */}
           <ImageToPdf />
 

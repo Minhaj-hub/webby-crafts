@@ -1,69 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://convert-kitty.web.app/</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://convertkit.web.app/</loc>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://convert-kitty.web.app/about</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://convertkit.web.app/about</loc>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://convert-kitty.web.app/blog</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://convertkit.web.app/blog</loc>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://convert-kitty.web.app/tutorials</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://convertkit.web.app/tutorials</loc>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://convert-kitty.web.app/contact</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://convertkit.web.app/contact</loc>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://convert-kitty.web.app/terms</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://convertkit.web.app/terms</loc>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://convert-kitty.web.app/disclaimer</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://convertkit.web.app/disclaimer</loc>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://convert-kitty.web.app/compress-image</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://convertkit.web.app/compress-image</loc>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://convert-kitty.web.app/convert-image</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://convertkit.web.app/convert-image</loc>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://convert-kitty.web.app/pdf-to-image</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://convertkit.web.app/pdf-to-image</loc>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://convert-kitty.web.app/image-to-pdf</loc>
-    <lastmod>2024-12-19</lastmod>
+    <loc>https://convertkit.web.app/image-to-pdf</loc>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
+  </url>
+  <!-- Conversion pages for better SEO coverage -->
+  <url>
+    <loc>https://convertkit.web.app/png-to-jpg</loc>
+    <lastmod>2025-12-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://convertkit.web.app/png-to-webp</loc>
+    <lastmod>2025-12-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://convertkit.web.app/jpg-to-png</loc>
+    <lastmod>2025-12-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
   </url>
 </urlset>

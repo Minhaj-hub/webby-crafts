@@ -1,4 +1,5 @@
 import { Wrench, Mail } from "lucide-react";
+import { APP_CONFIG } from "@/config/app.config";
 
 export const Footer = () => {
   return (
@@ -10,10 +11,10 @@ export const Footer = () => {
               <div className="w-12 h-12 bg-gradient-hero rounded-2xl flex items-center justify-center shadow-lg">
                 <Wrench className="w-7 h-7 text-white" />
               </div>
-              <span className="font-bold text-2xl bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">Convert Kitty</span>
+              <span className="font-bold text-2xl bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">{APP_CONFIG.siteName}</span>
             </div>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-              Professional utility tools for your daily workflow. Fast, secure, and completely free.
+              {APP_CONFIG.siteDescription}
             </p>
           </div>
 
@@ -21,17 +22,22 @@ export const Footer = () => {
             <h3 className="font-bold text-gray-900 dark:text-white mb-6 text-lg">Tools</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#compress" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium">
+                <a href="/compress-image" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium">
                   Image Compressor
                 </a>
               </li>
               <li>
-                <a href="#convert" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium">
-                  Format Converter
+                <a href="/convert-image" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium">
+                  Image Converter
                 </a>
               </li>
               <li>
-                <a href="#pdf-to-image" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium">
+                <a href="/image-to-pdf" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium">
+                  Image to PDF
+                </a>
+              </li>
+              <li>
+                <a href="/pdf-to-image" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium">
                   PDF to Image
                 </a>
               </li>
@@ -89,7 +95,7 @@ export const Footer = () => {
         <div className="border-t border-gray-200/60 dark:border-gray-700/60 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-600 dark:text-gray-400 font-medium">
-              © 2025 Convert Kitty. All rights reserved.
+              © 2025 {APP_CONFIG.siteName}. All rights reserved.
             </p>
             <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-500">
               <span>Made with</span>

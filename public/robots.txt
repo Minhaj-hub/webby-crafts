@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://convert-kitty.web.app/sitemap.xml
+Sitemap: https://convertkit.web.app/sitemap.xml
 
 # Block access to admin areas (if any)
 Disallow: /admin/

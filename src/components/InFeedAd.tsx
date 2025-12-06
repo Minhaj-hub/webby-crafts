@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 
+// Google Ads - Commented out until website gets traffic
+/*
 declare global {
   interface Window {
     adsbygoogle: any[];
@@ -28,3 +30,7 @@ export const InFeedAd = () => {
     </div>
   );
 };
+*/
+
+// Placeholder export until ads are enabled
+export const InFeedAd = () => null;

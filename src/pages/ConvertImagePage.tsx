@@ -4,6 +4,7 @@ import { ImageConverter } from "@/components/ImageConverter";
 import { SEOHead } from "@/components/SEOHead";
 import { SchemaMarkup } from "@/components/SchemaMarkup";
 import { Card } from "@/components/ui/card";
+import { getCanonicalUrl } from "@/config/app.config";
 import { Badge } from "@/components/ui/badge";
 import { RefreshCw, Palette, Globe, Smartphone } from "lucide-react";
 
@@ -56,13 +57,13 @@ const ConvertImagePage = () => {
         title="Free Online Image Converter — Convert JPG, PNG, WebP Instantly"
         description="Convert images online for free. Fast, secure, high-quality conversion between JPG, PNG, WebP, BMP, and GIF formats. No signup required."
         keywords="image converter, convert images, JPEG to PNG, PNG to WebP, image format converter, file format conversion, free online tool"
-        canonicalUrl="https://convert-kitty.web.app/convert-image"
+        canonicalUrl="https://convertkit.web.app/convert-image"
       />
 
       <SchemaMarkup
         toolName="Free Online Image Converter"
         toolDescription="A versatile, free online tool to convert images between JPEG, PNG, WebP, BMP, and GIF formats instantly. Secure browser-based processing."
-        toolUrl="https://convert-kitty.web.app/convert-image"
+        toolUrl="https://convertkit.web.app/convert-image"
         faqs={faqs}
         howToSteps={howToSteps}
       />
@@ -71,26 +72,11 @@ const ConvertImagePage = () => {
         <Navbar />
 
         <main className="pt-16">
-          {/* Hero Section */}
-          <section className="py-16 bg-gradient-hero text-white">
-            <div className="container mx-auto px-4 text-center">
-              <h1 className="text-5xl font-bold mb-6">
-                Free Online Image Converter
-              </h1>
-              <p className="text-xl mb-8 max-w-3xl mx-auto">
-                Convert between JPEG, PNG, WebP, GIF, and more image formats instantly.
-                Perfect for web optimization, compatibility, and professional workflows.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4 mb-8">
-                <Badge className="bg-white/20 text-white">20+ Formats Supported</Badge>
-                <Badge className="bg-white/20 text-white">Fast Conversion</Badge>
-                <Badge className="bg-white/20 text-white">No Quality Loss</Badge>
-              </div>
-            </div>
-          </section>
-
           {/* Tool Section */}
-          <ImageConverter />
+          <ImageConverter 
+            showFormatSwitcher={true}
+            defaultFormat="jpeg"
+          />
 
           {/* Tool Description with Keywords */}
           <section className="py-12 bg-background">
@@ -116,22 +102,18 @@ const ConvertImagePage = () => {
               <h2 className="text-3xl font-bold text-center mb-12">Why Convert Image Formats?</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <Card className="p-6 text-center">
-                  <Globe className="w-12 h-12 text-primary mx-auto mb-4" />
                   <h3 className="font-semibold mb-2">Web Optimization</h3>
                   <p className="text-sm text-muted-foreground">Convert to WebP for faster loading websites and better SEO</p>
                 </Card>
                 <Card className="p-6 text-center">
-                  <Smartphone className="w-12 h-12 text-primary mx-auto mb-4" />
                   <h3 className="font-semibold mb-2">Device Compatibility</h3>
                   <p className="text-sm text-muted-foreground">Ensure your images work across all devices and platforms</p>
                 </Card>
                 <Card className="p-6 text-center">
-                  <Palette className="w-12 h-12 text-primary mx-auto mb-4" />
                   <h3 className="font-semibold mb-2">Transparency Support</h3>
                   <p className="text-sm text-muted-foreground">Convert to PNG for transparent backgrounds and graphics</p>
                 </Card>
                 <Card className="p-6 text-center">
-                  <RefreshCw className="w-12 h-12 text-primary mx-auto mb-4" />
                   <h3 className="font-semibold mb-2">Format Migration</h3>
                   <p className="text-sm text-muted-foreground">Modernize your image library with newer, efficient formats</p>
                 </Card>

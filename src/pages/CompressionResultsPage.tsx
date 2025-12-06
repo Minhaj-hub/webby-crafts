@@ -15,6 +15,7 @@ import JSZip from "jszip";
 interface CompressionData {
   files: File[];
   quality: number;
+  startTime?: number;
 }
 
 interface CompressedResult {
@@ -34,6 +35,7 @@ const CompressionResultsPage = () => {
   const [currentFile, setCurrentFile] = useState(0);
   const [status, setStatus] = useState<"processing" | "completed" | "error">("processing");
   const [results, setResults] = useState<CompressedResult[]>([]);
+  const [compressionTime, setCompressionTime] = useState(0);
   // const [zoomLevel, setZoomLevel] = useState(100);
 
   useEffect(() => {
@@ -48,6 +50,7 @@ const CompressionResultsPage = () => {
     if (!data) return;
     
     const compressedResults: CompressedResult[] = [];
+    const processStart = Date.now();
     
     try {
       for (let i = 0; i < data.files.length; i++) {
@@ -65,13 +68,19 @@ const CompressionResultsPage = () => {
 
         ctx.drawImage(img, 0, 0);
 
+        const quality = data.quality / 100;
+        
+        // Always use JPEG for compression as it respects quality parameter
+        // This ensures actual file size reduction
         const blob = await new Promise<Blob | null>((resolve) => {
-          canvas.toBlob(resolve, "image/jpeg", data.quality / 100);
+          canvas.toBlob(resolve, "image/jpeg", quality);
         });
 
         if (blob) {
           const originalUrl = URL.createObjectURL(file);
           const compressedUrl = URL.createObjectURL(blob);
+          
+          console.log(`Image ${i + 1}: Original ${file.size} bytes, Compressed ${blob.size} bytes`);
           
           compressedResults.push({
             file,
@@ -83,12 +92,15 @@ const CompressionResultsPage = () => {
         }
       }
       
+      const processEnd = Date.now();
+      setCompressionTime((processEnd - processStart) / 1000); // Convert to seconds
       setResults(compressedResults);
       setStatus("completed");
       toast.success(`${compressedResults.length} images compressed successfully!`);
     } catch (error) {
+      console.error("Compression error:", error);
       setStatus("error");
-      toast.error("Compression failed");
+      toast.error("Compression failed. Please try again.");
     }
   };
 
@@ -166,6 +178,19 @@ const CompressionResultsPage = () => {
                 </div>
               </div>
 
+              {/* Error State */}
+              {status === "error" && (
+                <Card className="p-6 mb-8 bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-800">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-red-800 dark:text-red-300 mb-2">Compression Failed</h3>
+                    <p className="text-red-700 dark:text-red-400 mb-4">
+                      An error occurred while compressing your images. Please try again with different images or refresh the page.
+                    </p>
+                    <Button onClick={() => navigate("/compress-image")}>Go Back to Compressor</Button>
+                  </div>
+                </Card>
+              )}
+
               {/* Progress */}
               {status === "processing" && (
                 <Card className="p-6 mb-8">
@@ -217,7 +242,7 @@ const CompressionResultsPage = () => {
                       const reduction = ((result.originalSize - result.compressedSize) / result.originalSize * 100).toFixed(1);
                       
                       return (
-                        <Card key={index} className="p-6">
+                    <Card key={index} className="p-6">
                           <div className="grid md:grid-cols-2 gap-6">
                             
                             {/* Image Comparison */}
@@ -278,7 +303,9 @@ const CompressionResultsPage = () => {
                                 <div className="space-y-2">
                                   <div className="flex justify-between text-sm">
                                     <span>Size reduction:</span>
-                                    <Badge className="bg-success text-success-foreground">{reduction}%</Badge>
+                                    <Badge className={reduction === '-0.0' || parseFloat(reduction as string) < 0 ? "bg-yellow-500 text-yellow-foreground" : "bg-success text-success-foreground"}>
+                                      {reduction}%
+                                    </Badge>
                                   </div>
                                   <div className="flex justify-between text-sm">
                                     <span>Quality:</span>

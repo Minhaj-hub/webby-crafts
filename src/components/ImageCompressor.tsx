@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { FileImage, Download, Zap, TrendingDown, Eye, EyeOff, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { FileImage, Download, Zap, TrendingDown, Eye, X, Trash2 } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { FileUploadZone } from "./FileUploadZone";
 import { ProcessingIndicator } from "./ProcessingIndicator";
+import { ShareDialog } from "./ShareDialog";
 import { toast } from "sonner";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useNavigate } from "react-router-dom";
@@ -16,26 +17,49 @@ export const ImageCompressor = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [filePreviews, setFilePreviews] = useState<{ file: File, preview: string }[]>([]);
   const [quality, setQuality] = useState([80]);
-
+  const [objectUrls, setObjectUrls] = useState<string[]>([]);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const { logToolUsage } = useAnalytics();
   const navigate = useNavigate();
+  const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+
+  // Cleanup object URLs on unmount
+  const cleanup = () => {
+    objectUrls.forEach(url => URL.revokeObjectURL(url));
+  };
+
+  useEffect(() => {
+    return cleanup;
+  }, []);
 
   const handleFileSelect = (selectedFiles: File | File[]) => {
     const fileArray = Array.isArray(selectedFiles) ? selectedFiles : [selectedFiles];
 
+    // Validate file sizes
+    const validFiles = fileArray.filter(file => {
+      if (file.size > MAX_FILE_SIZE) {
+        toast.error(`${file.name} exceeds 50MB limit`);
+        return false;
+      }
+      return true;
+    });
+
+    if (validFiles.length === 0) return;
+
     // Add new files to existing ones instead of replacing
-    const newFiles = [...files, ...fileArray];
+    const newFiles = [...files, ...validFiles];
     setFiles(newFiles);
 
     // Create previews for new files only
     const newPreviews: { file: File, preview: string }[] = [];
-    fileArray.forEach(file => {
+    const newUrls: string[] = [];
+    validFiles.forEach(file => {
       const reader = new FileReader();
       reader.onload = (e) => {
         newPreviews.push({ file, preview: e.target?.result as string });
-        if (newPreviews.length === fileArray.length) {
+        if (newPreviews.length === validFiles.length) {
           setFilePreviews(prev => [...prev, ...newPreviews]);
+          setObjectUrls(prev => [...prev, ...newUrls]);
         }
       };
       reader.readAsDataURL(file);
@@ -45,13 +69,14 @@ export const ImageCompressor = () => {
   const startCompression = () => {
     if (files.length === 0) return;
 
-    logToolUsage("image_compressor");
+    logToolUsage("image_compressor", { file_count: files.length, quality: quality[0] });
 
+    const startTime = Date.now();
     navigate("/compression-results", {
       state: {
         files,
         quality: quality[0],
-
+        startTime
       }
     });
   };
@@ -81,33 +106,33 @@ export const ImageCompressor = () => {
   const estimatedReduction = Math.max(0, 100 - quality[0]);
 
   return (
-    <section id="compress" className="py-8 bg-gradient-section" aria-labelledby="compress-heading">
+    <section id="compress" className="py-20 bg-background" aria-labelledby="compress-heading">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-6">
-            <h1 className="text-3xl font-bold text-foreground mb-2">
+          <div className="text-center mb-8">
+            <h2 className="text-4xl font-bold text-foreground mb-2">
               Free Online Image Compressor
-            </h1>
-            <p className="text-muted-foreground">
+            </h2>
+            <p className="text-muted-foreground text-lg">
               Reduce file sizes by up to 90% without losing quality
             </p>
           </div>
 
-          <Card className="p-6 shadow-lg border-0 bg-card/50">
-            <div className="space-y-6">
+          <Card className="p-8 shadow-lg">
+            <div className="space-y-4">
               <FileUploadZone
                 onFileSelect={handleFileSelect}
                 acceptedFormats={[".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif", ".avif"]}
                 icon={<FileImage className="w-8 h-8 text-primary" />}
                 title="Drop images to compress"
-                description="Select single or multiple images"
+                description="Select single or multiple images (Max 50MB per file)"
                 multiple
               />
 
               {files.length > 0 && (
-                <div className="space-y-6">
+                <div className="space-y-4">
                   {/* Selected Images */}
-                  <div className="space-y-3">
+                  <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <p className="text-sm font-medium">{files.length} image(s) selected</p>
                       <Button
@@ -117,7 +142,9 @@ export const ImageCompressor = () => {
                           setFiles([]);
                           setFilePreviews([]);
                         }}
+                        className="text-destructive hover:text-destructive hover:bg-destructive/10"
                       >
+                        <Trash2 className="w-4 h-4 mr-1" />
                         Clear All
                       </Button>
                     </div>
@@ -147,14 +174,16 @@ export const ImageCompressor = () => {
                             </DialogContent>
                           </Dialog>
                           <div className="flex-1 min-w-0">
-                            <p className="font-medium text-sm truncate">{item.file.name}</p>
-                            <p className="text-xs text-muted-foreground">{formatFileSize(item.file.size)}</p>
+                        <div>
+                          <p className="font-medium text-sm truncate">{item.file.name}</p>
+                          <p className="text-xs text-muted-foreground">{formatFileSize(item.file.size)}</p>
+                        </div>
                           </div>
                           <div className="flex gap-1">
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="flex-shrink-0"
+                              className="flex-shrink-0 text-primary hover:text-primary hover:bg-primary/10"
                               onClick={() => setPreviewImage(item.preview)}
                             >
                               <Eye className="w-4 h-4" />
@@ -162,7 +191,7 @@ export const ImageCompressor = () => {
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="flex-shrink-0"
+                              className="flex-shrink-0 text-destructive hover:text-destructive hover:bg-destructive/10"
                               onClick={() => {
                                 const newFiles = files.filter((_, i) => i !== index);
                                 const newPreviews = filePreviews.filter((_, i) => i !== index);
@@ -179,7 +208,7 @@ export const ImageCompressor = () => {
                   </div>
 
                   {/* Quality Control */}
-                  <div className="space-y-3">
+                  <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <label className="text-sm font-medium text-foreground">
                         Compression Quality
@@ -229,6 +258,11 @@ export const ImageCompressor = () => {
                     <Zap className="w-4 h-4 mr-2" />
                     Compress {files.length} Image{files.length > 1 ? 's' : ''}
                   </Button>
+                  <ShareDialog
+                    fileName={files[0]?.name || "image"}
+                    fileSize={files.length + " image" + (files.length > 1 ? 's' : "")}
+                    toolName="Image Compressor"
+                  />
                 </div>
               )}
 

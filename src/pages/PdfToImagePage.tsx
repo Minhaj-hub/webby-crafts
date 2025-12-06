@@ -4,6 +4,7 @@ import { PdfToImage } from "@/components/PdfToImage";
 import { SEOHead } from "@/components/SEOHead";
 import { SchemaMarkup } from "@/components/SchemaMarkup";
 import { Card } from "@/components/ui/card";
+import { getCanonicalUrl } from "@/config/app.config";
 import { Badge } from "@/components/ui/badge";
 import { FileText, Image, Download, Eye } from "lucide-react";
 
@@ -56,13 +57,13 @@ const PdfToImagePage = () => {
         title="Free PDF to Image Converter — Convert PDF to JPG, PNG"
         description="Convert PDF pages to high-quality JPG or PNG images online for free. Extract images from PDF documents instantly. Secure and fast."
         keywords="pdf to image, convert pdf to jpg, pdf to png, extract pdf pages, free pdf converter, online pdf tool"
-        canonicalUrl="https://convert-kitty.web.app/pdf-to-image"
+        canonicalUrl="https://convertkit.web.app/pdf-to-image"
       />
 
       <SchemaMarkup
         toolName="Free PDF to Image Converter"
         toolDescription="A secure, free online tool to convert PDF pages into high-quality JPG or PNG images. Extract pages instantly in your browser."
-        toolUrl="https://convert-kitty.web.app/pdf-to-image"
+        toolUrl="https://convertkit.web.app/pdf-to-image"
         faqs={faqs}
         howToSteps={howToSteps}
       />
@@ -71,24 +72,6 @@ const PdfToImagePage = () => {
         <Navbar />
 
         <main className="pt-16">
-          {/* Hero Section */}
-          <section className="py-16 bg-gradient-hero text-white">
-            <div className="container mx-auto px-4 text-center">
-              <h1 className="text-5xl font-bold mb-6">
-                Free PDF to Image Converter
-              </h1>
-              <p className="text-xl mb-8 max-w-3xl mx-auto">
-                Convert PDF pages to high-quality images instantly. Extract individual pages
-                or convert entire documents to JPEG or PNG format with perfect clarity.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4 mb-8">
-                <Badge className="bg-white/20 text-white">High Resolution Output</Badge>
-                <Badge className="bg-white/20 text-white">All Pages Extracted</Badge>
-                <Badge className="bg-white/20 text-white">No File Size Limits</Badge>
-              </div>
-            </div>
-          </section>
-
           {/* Tool Section */}
           <PdfToImage />
 
@@ -116,22 +99,18 @@ const PdfToImagePage = () => {
               <h2 className="text-3xl font-bold text-center mb-12">Perfect for Every Use Case</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <Card className="p-6 text-center">
-                  <Eye className="w-12 h-12 text-primary mx-auto mb-4" />
                   <h3 className="font-semibold mb-2">Preview Documents</h3>
                   <p className="text-sm text-muted-foreground">Create thumbnails and previews of PDF documents for websites</p>
                 </Card>
                 <Card className="p-6 text-center">
-                  <Image className="w-12 h-12 text-primary mx-auto mb-4" />
                   <h3 className="font-semibold mb-2">Extract Graphics</h3>
                   <p className="text-sm text-muted-foreground">Pull out charts, diagrams, and images from PDF files</p>
                 </Card>
                 <Card className="p-6 text-center">
-                  <Download className="w-12 h-12 text-primary mx-auto mb-4" />
                   <h3 className="font-semibold mb-2">Archive Pages</h3>
                   <p className="text-sm text-muted-foreground">Save important PDF pages as images for long-term storage</p>
                 </Card>
                 <Card className="p-6 text-center">
-                  <FileText className="w-12 h-12 text-primary mx-auto mb-4" />
                   <h3 className="font-semibold mb-2">Share Content</h3>
                   <p className="text-sm text-muted-foreground">Convert pages to images for easy sharing on social media</p>
                 </Card>

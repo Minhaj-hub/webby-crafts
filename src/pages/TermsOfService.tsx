@@ -11,7 +11,7 @@ const TermsOfService = () => {
           <h1 className="text-4xl font-bold text-foreground mb-8">Terms of Service</h1>
           
           <div className="prose prose-lg max-w-none text-muted-foreground space-y-6">
-            <p className="text-sm text-muted-foreground">Last updated: {new Date().toLocaleDateString()}</p>
+            <p className="text-sm text-muted-foreground">Last updated: December 6, 2025</p>
             
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-4">1. Acceptance of Terms</h2>

@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Zap, Shield, FileDown, Smartphone, Layers, Sparkles, Share2, Image } from "lucide-react";
 import { useMemo } from "react";
+import { getCanonicalUrl } from "@/config/app.config";
 
 // Configuration for each conversion type
 interface ConversionConfig {
@@ -752,7 +753,7 @@ const ImageConversionPage = () => {
         return conversionConfigs[conversionType] || conversionConfigs["png-to-jpg"];
     }, [conversionType]);
 
-    const baseUrl = "https://convert-kitty.web.app";
+    const baseUrl = getCanonicalUrl("");
 
     return (
         <>
@@ -775,23 +776,6 @@ const ImageConversionPage = () => {
                 <Navbar />
 
                 <main className="pt-16">
-                    {/* Hero Section */}
-                    <section className="py-16 bg-gradient-hero text-white">
-                        <div className="container mx-auto px-4 text-center">
-                            <h1 className="text-5xl font-bold mb-6">
-                                {config.hero.title}
-                            </h1>
-                            <p className="text-xl mb-8 max-w-3xl mx-auto">
-                                {config.hero.subtitle}
-                            </p>
-                            <div className="flex flex-wrap justify-center gap-4 mb-8">
-                                {config.hero.badges.map((badge, index) => (
-                                    <Badge key={index} className="bg-white/20 text-white">{badge}</Badge>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-
                     {/* Tool Section */}
                     <ImageConverter
                         defaultFormat={config.targetFormat}
