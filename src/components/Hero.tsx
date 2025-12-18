@@ -48,12 +48,12 @@ export const Hero = () => {
 
           {/* Main Content */}
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full border border-gray-200 dark:border-gray-700 shadow-sm">
+            {/* <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full border border-gray-200 dark:border-gray-700 shadow-sm">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
               <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 100% Browser-Based • No Server Uploads
               </span>
-            </div>
+            </div> */}
 
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
               Transform Files

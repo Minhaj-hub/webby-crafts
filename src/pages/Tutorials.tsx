@@ -2,6 +2,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Play, BookOpen, Download, Settings } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { SEOHead } from "@/components/SEOHead";
 
 const Tutorials = () => {
   const tutorials = [
@@ -108,6 +109,12 @@ const Tutorials = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead 
+        title="Tutorials & Guides - Learn Image Processing & PDF Tools"
+        description="Learn how to get the most out of our image processing and PDF tools. Step-by-step tutorials for compression, format conversion, and PDF management."
+        keywords="tutorials, image processing guides, PDF tools tutorial, file compression tutorial, format conversion guides"
+        canonicalUrl="https://convertkit.web.app/tutorials"
+      />
       <Navbar />
       
       <div className="container mx-auto px-4 py-20">

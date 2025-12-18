@@ -5,6 +5,7 @@ import { Mail, MessageSquare, Clock, MapPin, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { SEOHead } from "@/components/SEOHead";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -79,6 +80,12 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead 
+        title="Contact Us - Convert Kit Support & Feedback"
+        description="Get in touch with Convert Kit support team. Have questions or feedback about our image compression, format conversion, or PDF tools? We'd love to hear from you."
+        keywords="contact convert kit, image compression support, file conversion help, PDF tools support, customer feedback"
+        canonicalUrl="https://convertkit.web.app/contact"
+      />
       <Navbar />
       
       <div className="container mx-auto px-4 py-20">

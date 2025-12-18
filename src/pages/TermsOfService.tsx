@@ -1,9 +1,16 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SEOHead } from "@/components/SEOHead";
 
 const TermsOfService = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead 
+        title="Terms of Service - Convert Kit Legal Agreement"
+        description="Read the Terms of Service for Convert Kit. Understand your rights and responsibilities when using our free image compression, format conversion, and PDF tools."
+        keywords="terms of service, legal agreement, convert kit terms, image compression terms, file conversion terms"
+        canonicalUrl="https://convertkit.web.app/terms"
+      />
       <Navbar />
       
       <div className="container mx-auto px-4 py-20">

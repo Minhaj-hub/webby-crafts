@@ -2,6 +2,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Calendar, User, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { SEOHead } from "@/components/SEOHead";
 
 const Blog = () => {
   const blogPosts = [
@@ -116,6 +117,12 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead 
+        title="File Processing Blog - Image Compression & PDF Conversion Guides"
+        description="Learn tips, guides, and best practices for image compression, format conversion, and PDF management. Expert advice for optimizing your files."
+        keywords="file processing blog, image compression guide, PDF conversion tips, format conversion tutorials, file optimization"
+        canonicalUrl="https://convertkit.web.app/blog"
+      />
       <Navbar />
       
       <div className="container mx-auto px-4 py-20">

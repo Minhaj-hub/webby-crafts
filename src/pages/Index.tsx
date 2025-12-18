@@ -14,10 +14,17 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, FileImage, RefreshCw, FileText, Images } from "lucide-react";
 import { Link } from "react-router-dom";
+import { SEOHead } from "@/components/SEOHead";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead 
+        title="Convert Kit - Free Image Compressor, Converter & PDF Tools Online"
+        description="Free online image compressor, format converter & PDF tools. Compress JPEG, PNG, WebP images. Convert formats. Create PDFs. 100% private - processing in browser."
+        keywords="image compressor, image converter, PDF tools, JPEG compressor, PNG compressor, WebP converter, image optimization, file converter, online tools"
+        canonicalUrl="https://convertkit.web.app/"
+      />
       <SkipToContent />
       <Navbar />
       

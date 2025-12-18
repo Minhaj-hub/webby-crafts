@@ -1,10 +1,17 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Wrench, Shield, Zap, Heart } from "lucide-react";
+import { SEOHead } from "@/components/SEOHead";
 
 const AboutUs = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead 
+        title="About Convert Kit - Free Image Compression & PDF Tools"
+        description="Learn about Convert Kit, a privacy-focused online tool for compressing images, converting file formats, and working with PDFs without compromising your data security."
+        keywords="about convert kit, image compression, file conversion, PDF tools, privacy focused, online tools"
+        canonicalUrl="https://convertkit.web.app/about"
+      />
       <Navbar />
       
       <div className="container mx-auto px-4 py-20">

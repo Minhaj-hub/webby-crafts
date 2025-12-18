@@ -1,9 +1,16 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SEOHead } from "@/components/SEOHead";
 
 const Disclaimer = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead 
+        title="Disclaimer - Convert Kit Legal Notice"
+        description="Read the Disclaimer for Convert Kit. Understand the limitations of liability and user responsibilities when using our free image compression, format conversion, and PDF tools."
+        keywords="disclaimer, legal notice, convert kit disclaimer, image compression disclaimer, file conversion disclaimer"
+        canonicalUrl="https://convertkit.web.app/disclaimer"
+      />
       <Navbar />
       
       <div className="container mx-auto px-4 py-20">

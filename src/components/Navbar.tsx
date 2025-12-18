@@ -37,7 +37,7 @@ export const Navbar = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3 cursor-pointer group" onClick={() => handleNavigation('/')}>
             <img 
-              src="/convert-kitty.png" 
+              src="/convert-kit.png" 
               alt="Convert Kit Logo"
               className="h-10 w-10 rounded-lg shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-105 object-contain"
             />
